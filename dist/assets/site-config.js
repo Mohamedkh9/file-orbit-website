@@ -5,11 +5,6 @@ window.FILE_ORBIT_SITE = {
     "nameEn": "Mohamed Khalid",
     "email": "mohamedkhalida999@gmail.com"
   },
-  "github": {
-    "owner": "Mohamedkh9",
-    "websiteRepo": "file-orbit-website",
-    "releasesRepo": "file-orbit-releases"
-  },
   "siteOrigin": "",
   "release": {
     "displayVersion": "17.1",
@@ -26,5 +21,10 @@ window.FILE_ORBIT_SITE = {
     "enabled": false,
     "publisherCertificateSha256": "",
     "signedManifestFile": "release/signed-manifest.json"
+  },
+  "downloads": {
+    "installer": "/download/windows",
+    "runtime": "/download/runtime",
+    "checksums": "/download/checksums"
   }
 };

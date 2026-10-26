@@ -12,7 +12,14 @@ for(const key of ['installer','runtime','checksums'])if(!legalName.test(config.r
 const production=process.env.VERCEL_PROJECT_PRODUCTION_URL||'';
 let origin=(config.siteOrigin|| (production?'https://'+production:'')).replace(/\/$/,'');
 if(origin){const u=new URL(origin);if(u.protocol!=='https:'||u.username||u.password||u.pathname!=='/'||u.search||u.hash)throw new Error('Site origin must be a bare HTTPS origin');origin=u.origin;}
-fs.writeFileSync(path.join(dist,'assets/site-config.js'),'window.FILE_ORBIT_SITE = '+JSON.stringify({...config,siteOrigin:origin},null,2)+';\n');
+const downloads={installer:'/download/windows',runtime:'/download/runtime',checksums:'/download/checksums'};
+const routes=JSON.parse(fs.readFileSync(path.join(root,'vercel.json'),'utf8')).redirects||[];
+for(const [key,source]of Object.entries(downloads)){
+ const destination=`https://github.com/${config.github.owner}/${config.github.releasesRepo}/releases/download/${config.release.tag}/${config.release[key]}`;
+ if(!routes.some(r=>r.source===source&&r.destination===destination&&r.permanent===false))throw new Error('Update vercel.json download redirect for '+key+' before publishing this release');
+}
+const {github,...publicConfig}=config;
+fs.writeFileSync(path.join(dist,'assets/site-config.js'),'window.FILE_ORBIT_SITE = '+JSON.stringify({...publicConfig,downloads,siteOrigin:origin},null,2)+';\n');
 const icons=JSON.parse(fs.readFileSync(path.join(dist,'assets/icons.json'),'utf8'));
 fs.writeFileSync(path.join(dist,'assets/icons.js'),'window.FILE_ORBIT_ICONS = '+JSON.stringify(icons)+';\n');
 for(const page of required){
