@@ -13,14 +13,14 @@
   "siteOrigin": "",
   "release": {
     "displayVersion": "18",
-    "version": "18.0.0.0",
+    "version": "18.0.1.0",
     "tag": "v18",
     "installer": "FileOrbit-Setup-18.0.exe",
     "runtime": "FileOrbit-18.0-Public.zip",
     "checksums": "FileOrbit-18.0-SHA256.txt",
     "installerBytes": 88142848,
     "signatureStatus": "unsigned",
-    "installerSha256": "FD04E844A3057C51AE5E2320DF7E6EDAD5566732DE46EBCC021FCE0FC2CF70F3"
+    "installerSha256": "B02BDE8E2E46782B2F4D9782057D7770AFD6B25360CEE87ABE566FC289C1BE26"
   },
   "updates": {
     "enabled": true,
