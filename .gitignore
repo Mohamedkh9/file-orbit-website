@@ -1,0 +1,14 @@
+node_modules/
+.vercel/
+.env
+.env.*
+*.pfx
+*.p12
+*.key
+*.pem
+*.exe
+*.dll
+*.zip
+*.log
+.DS_Store
+Thumbs.db

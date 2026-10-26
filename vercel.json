@@ -45,17 +45,17 @@
   "redirects": [
     {
       "source": "/download/windows",
-      "destination": "https://github.com/Mohamedkh9/file-orbit-releases/releases/download/v17.2/FileOrbit-Setup-17.2.exe",
+      "destination": "https://github.com/Mohamedkh9/file-orbit-releases/releases/download/v18/FileOrbit-Setup-18.0.exe",
       "permanent": false
     },
     {
       "source": "/download/runtime",
-      "destination": "https://github.com/Mohamedkh9/file-orbit-releases/releases/download/v17.2/FileOrbit-17.2-Public.zip",
+      "destination": "https://github.com/Mohamedkh9/file-orbit-releases/releases/download/v18/FileOrbit-18.0-Public.zip",
       "permanent": false
     },
     {
       "source": "/download/checksums",
-      "destination": "https://github.com/Mohamedkh9/file-orbit-releases/releases/download/v17.2/FileOrbit-17.2-SHA256.txt",
+      "destination": "https://github.com/Mohamedkh9/file-orbit-releases/releases/download/v18/FileOrbit-18.0-SHA256.txt",
       "permanent": false
     }
   ]
