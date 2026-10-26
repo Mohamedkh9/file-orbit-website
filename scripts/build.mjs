@@ -1,3 +1,4 @@
+import {createPublicKey,verify} from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -33,14 +34,25 @@ for(const page of required){
 }
 const feed=path.join(dist,'updates/latest.json');
 if(config.updates.enabled){
- if(config.release.signatureStatus!=='signed'||!/^[A-Fa-f0-9]{64}$/.test(config.updates.publisherCertificateSha256))throw new Error('Automatic feed requires a real signed release and certificate SHA-256');
+ if(config.updates.mode!=='publisher-key'&&(config.release.signatureStatus!=='signed'||!/^[A-Fa-f0-9]{64}$/.test(config.updates.publisherCertificateSha256)))throw new Error('Automatic feed requires a verified publisher identity');
  if(config.updates.signedManifestFile!=='release/signed-manifest.json')throw new Error('Use release/signed-manifest.json produced by the signing workflow');
- const manifest=JSON.parse(fs.readFileSync(path.join(root,config.updates.signedManifestFile),'utf8'));
+ const envelope=JSON.parse(fs.readFileSync(path.join(root,config.updates.signedManifestFile),'utf8'));
+ let manifest=envelope;
+ if(config.updates.mode==='publisher-key'){
+  if(config.updates.publicKeyFile!=='release/update-public-key.xml'||envelope.Format!=='FileOrbit.Update.v1')throw new Error('Invalid publisher-key update format');
+  const xml=fs.readFileSync(path.join(root,config.updates.publicKeyFile),'utf8');
+  const part=tag=>Buffer.from(xml.match(new RegExp('<'+tag+'>([^<]+)</'+tag+'>'))?.[1]||'','base64');
+  if(part('Modulus').length<384)throw new Error('Update key must be RSA-3072 or stronger');
+  const key=createPublicKey({key:{kty:'RSA',n:part('Modulus').toString('base64url'),e:part('Exponent').toString('base64url')},format:'jwk'});
+  const bytes=Buffer.from(envelope.Payload||'','base64');
+  if(!verify('RSA-SHA256',bytes,key,Buffer.from(envelope.Signature||'','base64')))throw new Error('Invalid update signature');
+  manifest=JSON.parse(bytes.toString('utf8'));if(manifest.Product!=='File Orbit')throw new Error('Update product mismatch');
+ }
  const expected=`https://github.com/${config.github.owner}/${config.github.releasesRepo}/releases/download/${config.release.tag}/${config.release.installer}`;
  if(manifest.Version!==config.release.version||manifest.InstallerUrl!==expected||!/^[A-Fa-f0-9]{64}$/.test(manifest.Sha256))throw new Error('Signed manifest does not match the configured release');
- fs.writeFileSync(feed,JSON.stringify(manifest,null,2)+'\n');
+ fs.writeFileSync(feed,JSON.stringify(envelope,null,2)+'\n');
 }else if(fs.existsSync(feed))fs.unlinkSync(feed);
 fs.writeFileSync(path.join(dist,'robots.txt'),'User-agent: *\nAllow: /\n'+(origin?'Sitemap: '+origin+'/sitemap.xml\n':''));
 const sitemap=path.join(dist,'sitemap.xml');if(origin)fs.writeFileSync(sitemap,'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+required.filter(p=>p!=='404').map(p=>'<url><loc>'+origin+(p==='index'?'/':'/'+p)+'</loc></url>').join('')+'</urlset>\n');else if(fs.existsSync(sitemap))fs.unlinkSync(sitemap);
-console.log('Built File Orbit website: '+required.length+' bilingual pages. Public update feed: '+(config.updates.enabled?'enabled':'not enabled; signing remains pending')+'.');
+console.log('Built File Orbit website: '+required.length+' bilingual pages. Public update feed: '+(config.updates.enabled?'enabled':'not enabled')+'.');
 await import('./check.mjs');

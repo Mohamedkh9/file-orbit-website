@@ -35,6 +35,7 @@ $publisherConfig.release.checksums='FileOrbit-'+$publisherDisplay+'-SHA256.txt'
 $publisherConfig.release.installerBytes=(Get-Item -LiteralPath $publisherInstaller).Length
 $publisherConfig.release.signatureStatus='signed'
 $publisherConfig.release | Add-Member -MemberType NoteProperty -Name installerSha256 -Value $publisherFileHash -Force
+$publisherConfig.updates | Add-Member -MemberType NoteProperty -Name mode -Value 'authenticode' -Force
 $publisherConfig.updates.enabled=$true
 $publisherConfig.updates.publisherCertificateSha256=$publisherPin
 $publisherTemp=$publisherConfigPath+'.'+[Guid]::NewGuid().ToString('N')+'.tmp'
