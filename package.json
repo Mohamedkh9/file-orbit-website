@@ -1,0 +1,9 @@
+{
+  "name": "file-orbit-website",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Bilingual File Orbit website, prepared for GitHub and Vercel.",
+  "engines": { "node": ">=20" },
+  "scripts": { "build": "node scripts/build.mjs", "check": "node scripts/check.mjs", "preview": "node scripts/serve.mjs" }
+}
