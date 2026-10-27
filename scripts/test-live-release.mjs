@@ -1,0 +1,23 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import {validateRelease,fallbackRelease,latestRelease} from '../lib/release.mjs';
+import releaseHandler from '../api/release.js';
+import downloadHandler from '../api/download.js';
+import updateHandler from '../api/update.js';
+const fixture=JSON.parse(fs.readFileSync(new URL('./fixtures/release.json',import.meta.url),'utf8'));
+const envelope=JSON.parse(fs.readFileSync(new URL('../release/signed-manifest.json',import.meta.url),'utf8'));
+const valid=validateRelease(fixture,envelope);assert.equal(valid.release.version,'18.2.0.0');assert.match(valid.urls.installer,/download\/v18\.2\/FileOrbit-Setup-18.2\.exe$/);
+assert.throws(()=>validateRelease({...fixture,tag_name:'18.2'},envelope));
+assert.throws(()=>validateRelease({...fixture,prerelease:true},envelope));
+const changed=structuredClone(envelope);changed.Signature='A'+changed.Signature.substring(1);assert.throws(()=>validateRelease(fixture,changed));
+const wrong=structuredClone(fixture);wrong.assets.find(a=>a.name.endsWith('.exe')).digest='sha256:'+'0'.repeat(64);assert.throws(()=>validateRelease(wrong,envelope));
+assert.equal(fallbackRelease().release.version,'18.2.0.0');
+let requests=0;globalThis.fetch=async url=>{requests++;return new Response(JSON.stringify(url.includes('api.github.com')?fixture:envelope),{status:200,headers:{'content-type':'application/json'}})};
+const results=await Promise.all([latestRelease(),latestRelease(),latestRelease()]);assert.equal(requests,2);assert.ok(results.every(r=>r.stale===false));
+function response(){return {headers:{},statusCode:200,setHeader(k,v){this.headers[k]=v},status(v){this.statusCode=v;return this},json(v){this.body=v;return this},end(v){this.body=v;return this}}}
+let res=response();await releaseHandler({method:'GET'},res);assert.equal(res.body.release.version,'18.2.0.0');assert.equal(res.body.downloads.installer,'/download/windows');
+res=response();await downloadHandler({method:'GET',query:{asset:'installer'}},res);assert.equal(res.statusCode,307);assert.equal(res.headers.Location,valid.urls.installer);
+res=response();await downloadHandler({method:'GET',query:{asset:'https://example.test'}},res);assert.equal(res.statusCode,400);
+res=response();await updateHandler({method:'GET'},res);assert.deepEqual(res.body,envelope);
+res=response();await releaseHandler({method:'POST'},res);assert.equal(res.statusCode,405);
+console.log('PASS signed release validation, tag mismatch/tamper rejection, shared fetch cache, metadata, download redirects and update feed');

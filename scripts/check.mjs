@@ -2,7 +2,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');const dist=path.join(root,'dist');
-const redirects=new Set(JSON.parse(fs.readFileSync(path.join(root,'vercel.json'),'utf8')).redirects.map(r=>r.source));
+const routeConfig=JSON.parse(fs.readFileSync(path.join(root,'vercel.json'),'utf8'));
+const redirects=new Set([...(routeConfig.redirects||[]),...(routeConfig.rewrites||[])].map(r=>r.source));
 const files=fs.readdirSync(dist).filter(n=>n.endsWith('.html'));let checked=0;
 for(const name of files){
  const html=fs.readFileSync(path.join(dist,name),'utf8');

@@ -42,21 +42,29 @@
       ]
     }
   ],
-  "redirects": [
+  "redirects": [],
+  "rewrites": [
     {
       "source": "/download/windows",
-      "destination": "https://github.com/Mohamedkh9/file-orbit-releases/releases/download/v18/FileOrbit-Setup-18.0.exe",
-      "permanent": false
+      "destination": "/api/download?asset=installer"
     },
     {
       "source": "/download/runtime",
-      "destination": "https://github.com/Mohamedkh9/file-orbit-releases/releases/download/v18/FileOrbit-18.0-Public.zip",
-      "permanent": false
+      "destination": "/api/download?asset=runtime"
     },
     {
       "source": "/download/checksums",
-      "destination": "https://github.com/Mohamedkh9/file-orbit-releases/releases/download/v18/FileOrbit-18.0-SHA256.txt",
-      "permanent": false
+      "destination": "/api/download?asset=checksums"
+    },
+    {
+      "source": "/updates/latest.json",
+      "destination": "/api/update"
     }
-  ]
+  ],
+  "functions": {
+    "api/*.js": {
+      "maxDuration": 30,
+      "includeFiles": "{release/**,site.config.json}"
+    }
+  }
 }

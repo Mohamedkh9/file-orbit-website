@@ -17,7 +17,7 @@ const downloads={installer:'/download/windows',runtime:'/download/runtime',check
 const routes=JSON.parse(fs.readFileSync(path.join(root,'vercel.json'),'utf8')).redirects||[];
 for(const [key,source]of Object.entries(downloads)){
  const destination=`https://github.com/${config.github.owner}/${config.github.releasesRepo}/releases/download/${config.release.tag}/${config.release[key]}`;
- if(!routes.some(r=>r.source===source&&r.destination===destination&&r.permanent===false))throw new Error('Update vercel.json download redirect for '+key+' before publishing this release');
+ if(!routes.some(r=>r.source===source&&r.destination===destination&&r.permanent===false)&&!JSON.parse(fs.readFileSync(path.join(root,'vercel.json'),'utf8')).rewrites?.some(r=>r.source===source&&r.destination==='/api/download?asset='+key))throw new Error('Update vercel.json download redirect for '+key+' before publishing this release');
 }
 const {github,...publicConfig}=config;
 fs.writeFileSync(path.join(dist,'assets/site-config.js'),'window.FILE_ORBIT_SITE = '+JSON.stringify({...publicConfig,downloads,siteOrigin:origin},null,2)+';\n');
@@ -53,6 +53,7 @@ if(config.updates.enabled){
  fs.writeFileSync(feed,JSON.stringify(envelope,null,2)+'\n');
 }else if(fs.existsSync(feed))fs.unlinkSync(feed);
 fs.writeFileSync(path.join(dist,'robots.txt'),'User-agent: *\nAllow: /\n'+(origin?'Sitemap: '+origin+'/sitemap.xml\n':''));
+if(config.liveReleases&&fs.existsSync(feed))fs.unlinkSync(feed);
 const sitemap=path.join(dist,'sitemap.xml');if(origin)fs.writeFileSync(sitemap,'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+required.filter(p=>p!=='404').map(p=>'<url><loc>'+origin+(p==='index'?'/':'/'+p)+'</loc></url>').join('')+'</urlset>\n');else if(fs.existsSync(sitemap))fs.unlinkSync(sitemap);
 console.log('Built File Orbit website: '+required.length+' bilingual pages. Public update feed: '+(config.updates.enabled?'enabled':'not enabled')+'.');
 await import('./check.mjs');

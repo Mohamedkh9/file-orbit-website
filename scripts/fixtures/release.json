@@ -1,0 +1,56 @@
+{
+  "tag_name": "v18.2",
+  "draft": false,
+  "prerelease": false,
+  "assets": [
+    {
+      "name": "FileOrbit-18.2-Public.zip",
+      "size": 88016508,
+      "state": "uploaded",
+      "digest": "sha256:2eccaa0fdbd535c1f3c5567ebb981cb3ed9cd36a5ae6cc455228fab775cf4f35",
+      "browser_download_url": "https://github.com/Mohamedkh9/file-orbit-releases/releases/download/v18.2/FileOrbit-18.2-Public.zip"
+    },
+    {
+      "name": "FileOrbit-18.2-SHA256.txt",
+      "size": 519,
+      "state": "uploaded",
+      "digest": "sha256:6b0cbf95b7b723329a7dbf0aefd7030d253e24f85d4edbe0c85db6f12adddc42",
+      "browser_download_url": "https://github.com/Mohamedkh9/file-orbit-releases/releases/download/v18.2/FileOrbit-18.2-SHA256.txt"
+    },
+    {
+      "name": "FileOrbit-Setup-18.2.exe",
+      "size": 88132096,
+      "state": "uploaded",
+      "digest": "sha256:5eabfbf852fd46b9de86e17d857c1966e6564bb35b15101ae198009a9aace997",
+      "browser_download_url": "https://github.com/Mohamedkh9/file-orbit-releases/releases/download/v18.2/FileOrbit-Setup-18.2.exe"
+    },
+    {
+      "name": "latest.json",
+      "size": 1113,
+      "state": "uploaded",
+      "digest": "sha256:6c237da31022fcad03ddd10312686ab7f1a88bf5394f4e1ed331d0c37595dd09",
+      "browser_download_url": "https://github.com/Mohamedkh9/file-orbit-releases/releases/download/v18.2/latest.json"
+    },
+    {
+      "name": "Release-Notes.md",
+      "size": 1532,
+      "state": "uploaded",
+      "digest": "sha256:f0c7bce6956e047eb286ad69d2067cd2a3df70bf77191815a0e1ee40e562bf6e",
+      "browser_download_url": "https://github.com/Mohamedkh9/file-orbit-releases/releases/download/v18.2/Release-Notes.md"
+    },
+    {
+      "name": "ThirdPartyNotices.txt",
+      "size": 877014,
+      "state": "uploaded",
+      "digest": "sha256:ead5574c28480ac57f046fa016a578a123fd37ef6a61a138297c12f76101d846",
+      "browser_download_url": "https://github.com/Mohamedkh9/file-orbit-releases/releases/download/v18.2/ThirdPartyNotices.txt"
+    },
+    {
+      "name": "User-Guide.txt",
+      "size": 23160,
+      "state": "uploaded",
+      "digest": "sha256:c38eb31e109b1f9196e78870e8031c8a4774c43530570ff9052110cc570bb4ab",
+      "browser_download_url": "https://github.com/Mohamedkh9/file-orbit-releases/releases/download/v18.2/User-Guide.txt"
+    }
+  ]
+}
