@@ -33,6 +33,7 @@ for(const page of required){
  fs.writeFileSync(file,html);
 }
 const feed=path.join(dist,'updates/latest.json');
+if(config.updates.enabled)fs.mkdirSync(path.dirname(feed),{recursive:true});
 if(config.updates.enabled){
  if(config.updates.mode!=='publisher-key'&&(config.release.signatureStatus!=='signed'||!/^[A-Fa-f0-9]{64}$/.test(config.updates.publisherCertificateSha256)))throw new Error('Automatic feed requires a verified publisher identity');
  if(config.updates.signedManifestFile!=='release/signed-manifest.json')throw new Error('Use release/signed-manifest.json produced by the signing workflow');
