@@ -1,21 +1,21 @@
 window.FILE_ORBIT_SITE = {
   "product": "File Orbit",
   "developer": {
-    "nameAr": "محمد خالد",
+    "nameAr": "Ù…Ø­Ù…Ø¯ Ø®Ø§Ù„Ø¯",
     "nameEn": "Mohamed Khalid",
     "email": "mohamedkhalida999@gmail.com"
   },
-  "siteOrigin": "",
+  "siteOrigin": "https://file-orbit-website.vercel.app",
   "release": {
-    "displayVersion": "18.2",
-    "version": "18.2.0.0",
-    "tag": "v18.2",
-    "installer": "FileOrbit-Setup-18.2.exe",
-    "runtime": "FileOrbit-18.2-Public.zip",
-    "checksums": "FileOrbit-18.2-SHA256.txt",
-    "installerBytes": 88132096,
+    "displayVersion": "19.0",
+    "version": "19.0.0.0",
+    "tag": "v19.0",
+    "installer": "FileOrbit-Setup-19.0.exe",
+    "runtime": "FileOrbit-19.0-Public.zip",
+    "checksums": "FileOrbit-19.0-SHA256.txt",
+    "installerBytes": 88222208,
     "signatureStatus": "unsigned",
-    "installerSha256": "5EABFBF852FD46B9DE86E17D857C1966E6564BB35B15101AE198009A9AACE997"
+    "installerSha256": "780C779877637ECA76D18DD3233BA92CC4063EA1C36B98CFC748654400FFC26C"
   },
   "updates": {
     "enabled": true,
