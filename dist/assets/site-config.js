@@ -7,15 +7,15 @@ window.FILE_ORBIT_SITE = {
   },
   "siteOrigin": "https://file-orbit-website.vercel.app",
   "release": {
-    "displayVersion": "19.1",
-    "version": "19.1.0.0",
-    "tag": "v19.1",
-    "installer": "FileOrbit-Setup-19.1.exe",
-    "runtime": "FileOrbit-19.1-Public.zip",
-    "checksums": "FileOrbit-19.1-SHA256.txt",
-    "installerBytes": 88228864,
+    "displayVersion": "20.0",
+    "version": "20.0.0.0",
+    "tag": "v20.0",
+    "installer": "FileOrbit-Setup-20.0.exe",
+    "runtime": "FileOrbit-20.0-Public.zip",
+    "checksums": "FileOrbit-20.0-SHA256.txt",
+    "installerBytes": 90194432,
     "signatureStatus": "unsigned",
-    "installerSha256": "F38E63A97DCC9AD50649817B00CE0CFA49FF75814AC91BFF1C721C5A4C638283"
+    "installerSha256": "1733DB45B8BC4EE7363AFB300F5F0FED2E60024E720067F484D76101A2398B62"
   },
   "updates": {
     "enabled": true,
